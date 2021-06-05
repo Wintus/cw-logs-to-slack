@@ -15,4 +15,5 @@ const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
   });
 };
 
+// noinspection JSUnusedGlobalSymbols
 export const main = middyfy(hello);
