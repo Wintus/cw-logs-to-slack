@@ -1,5 +1,5 @@
 import type { AWS } from "@serverless/typescript";
-import { logHandler } from "@functions/log";
+import { factory as logHandler } from "@functions/log";
 
 const serverlessConfiguration: AWS = {
   service: "CwLogsToSlack",
@@ -23,7 +23,17 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: "20201221",
   },
-  functions: { logHandler },
+  functions: {
+    logHandler: logHandler([
+      {
+        // TODO: setup filter
+        cloudwatchLog: {
+          logGroup: "",
+          filter: "",
+        },
+      },
+    ]),
+  },
 };
 
 module.exports = serverlessConfiguration;
