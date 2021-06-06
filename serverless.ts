@@ -13,7 +13,9 @@ const serverlessConfiguration: AWS = {
   plugins: ["serverless-webpack"],
   provider: {
     name: "aws",
+    region: "ap-northeast-1",
     runtime: "nodejs14.x",
+    memorySize: 128, // = min
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
