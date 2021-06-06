@@ -13,10 +13,12 @@ const webhook = new IncomingWebhook(slackWebhookUrl);
 const codeBlockSep = "```";
 
 const slackAlerter: Handler<CloudWatchLogsDecodedData> = async ({
-  logEvents,
   logGroup,
   logStream,
+  subscriptionFilters,
+  logEvents,
 }) => {
+  const filters = subscriptionFilters.map((s) => `* ${s}`).join("\n");
   const eventBlocks = logEvents.map(({ id, message, timestamp }) => ({
     type: "section",
     text: {
@@ -48,19 +50,18 @@ ${codeBlockSep}`,
         fields: [
           {
             type: "mrkdwn",
-            text: "*Log Group*",
+            text: `*Log Group*
+${logGroup}`,
           },
           {
             type: "mrkdwn",
-            text: "*Log Stream*",
+            text: `*Log Stream*
+${logStream}`,
           },
           {
-            type: "plain_text",
-            text: logGroup,
-          },
-          {
-            type: "plain_text",
-            text: logStream,
+            type: "mrkdwn",
+            text: `*Subscription Filters*
+${filters}`,
           },
         ],
       },
