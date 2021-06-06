@@ -8,6 +8,8 @@ import type {
 import "source-map-support/register";
 import { promisify } from "util";
 import { unzip } from "zlib";
+// @ts-ignore
+import { format } from "json-string-formatter";
 
 const unzipAsync = promisify(unzip);
 
@@ -40,7 +42,7 @@ timestamp = \`${timestamp}\`
 happened at = \`${new Date(timestamp)}\`
 message:
 ${codeBlockSep}
-${message}
+${format(message)}
 ${codeBlockSep}`,
     },
   }));
