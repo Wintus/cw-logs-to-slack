@@ -1,0 +1,5 @@
+{
+  "awslogs": {
+    "data": "BASE64ENCODED_GZIP_COMPRESSED_DATA"
+  }
+}
