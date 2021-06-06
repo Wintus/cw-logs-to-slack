@@ -26,15 +26,18 @@ const serverlessConfiguration: AWS = {
     lambdaHashingVersion: "20201221",
   },
   functions: {
-    logHandler: logHandler([
-      {
-        cloudwatchLog: {
-          logGroup: "CloudTrail/DefaultLogGroup",
-          filter:
-            '{ ($.errorCode = "*UnauthorizedOperation") || ($.errorCode = "AccessDenied*") }',
+    logHandler: logHandler(
+      [
+        {
+          cloudwatchLog: {
+            logGroup: "CloudTrail/DefaultLogGroup",
+            filter:
+              '{ ($.errorCode = "*UnauthorizedOperation") || ($.errorCode = "AccessDenied*") }',
+          },
         },
-      },
-    ]),
+      ],
+      process.env.SLACK_WEBHOOK_URL!
+    ),
   },
 };
 
