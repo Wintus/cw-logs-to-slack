@@ -1,4 +1,3 @@
-import { middyfy } from "@libs/lambda";
 import { IncomingWebhook } from "@slack/webhook";
 import type {
   CloudWatchLogsDecodedData,
@@ -96,4 +95,4 @@ ${codeBlockSep}`,
 };
 
 // noinspection JSUnusedGlobalSymbols
-export const main = middyfy(logHandler);
+export const main = logHandler;
