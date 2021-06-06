@@ -9,7 +9,10 @@ type Event = Extract<
   }
 >;
 
-export const factory = (target: string, events: Event[]): FunctionConfig => ({
+export const factory = (
+  target: Record<"Fn::GetAtt", ReadonlyArray<string>>,
+  events: Event[]
+): FunctionConfig => ({
   handler: `${handlerPath(__dirname)}/handler.main`,
   events,
   environment: {

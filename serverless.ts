@@ -2,8 +2,10 @@ import type { AWS } from "@serverless/typescript";
 import { factory as logHandler } from "@functions/log";
 import { factory as slackAlerter } from "@functions/slack-webhook";
 
-const alerterName = "slackAlerter";
-const alerterArn = `!GetAtt ${alerterName}.Arn`;
+const alerterName = "SlackAlerter";
+const alerterArn = {
+  "Fn::GetAtt": [`${alerterName}LambdaFunction`, "Arn"] as const,
+};
 
 const serverlessConfiguration: AWS = {
   service: "CwLogsToSlack",
@@ -33,7 +35,7 @@ const serverlessConfiguration: AWS = {
         statements: [
           {
             Effect: "Allow",
-            Resource: alerterArn,
+            Resource: "*", // TODO: narrow
             Action: "lambda:InvokeFunction",
           },
         ],
