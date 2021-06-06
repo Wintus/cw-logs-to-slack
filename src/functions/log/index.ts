@@ -9,13 +9,10 @@ type Event = Extract<
   }
 >;
 
-export const factory = (
-  events: Event[],
-  slackWebhookUrl: string
-): FunctionConfig => ({
+export const factory = (target: string, events: Event[]): FunctionConfig => ({
   handler: `${handlerPath(__dirname)}/handler.main`,
   events,
   environment: {
-    SLACK_WEBHOOK_URL: slackWebhookUrl,
+    SLACK_ALERTER_ARN: target,
   },
 });

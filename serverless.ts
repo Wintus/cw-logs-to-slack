@@ -1,5 +1,9 @@
 import type { AWS } from "@serverless/typescript";
 import { factory as logHandler } from "@functions/log";
+import { factory as slackAlerter } from "@functions/slack-webhook";
+
+const alerterName = "slackAlerter";
+const alerterArn = `!GetAtt ${alerterName}.Arn`;
 
 const serverlessConfiguration: AWS = {
   service: "CwLogsToSlack",
@@ -24,20 +28,29 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
     },
     lambdaHashingVersion: "20201221",
+    iam: {
+      role: {
+        statements: [
+          {
+            Effect: "Allow",
+            Resource: alerterArn,
+            Action: "lambda:InvokeFunction",
+          },
+        ],
+      },
+    },
   },
   functions: {
-    logHandler: logHandler(
-      [
-        {
-          cloudwatchLog: {
-            logGroup: "CloudTrail/DefaultLogGroup",
-            filter:
-              '{ ($.errorCode = "*UnauthorizedOperation") || ($.errorCode = "AccessDenied*") }',
-          },
+    logHandler: logHandler(alerterArn, [
+      {
+        cloudwatchLog: {
+          logGroup: "CloudTrail/DefaultLogGroup",
+          filter:
+            '{ ($.errorCode = "*UnauthorizedOperation") || ($.errorCode = "AccessDenied*") }',
         },
-      ],
-      process.env.SLACK_WEBHOOK_URL!
-    ),
+      },
+    ]),
+    [alerterName]: slackAlerter(process.env.SLACK_WEBHOOK_URL!),
   },
 };
 
