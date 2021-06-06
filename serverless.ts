@@ -28,10 +28,10 @@ const serverlessConfiguration: AWS = {
   functions: {
     logHandler: logHandler([
       {
-        // TODO: setup filter
         cloudwatchLog: {
-          logGroup: "",
-          filter: "",
+          logGroup: "CloudTrail/DefaultLogGroup",
+          filter:
+            '{ ($.errorCode = "*UnauthorizedOperation") || ($.errorCode = "AccessDenied*") }',
         },
       },
     ]),
