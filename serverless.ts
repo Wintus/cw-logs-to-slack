@@ -1,5 +1,5 @@
 import type { AWS } from "@serverless/typescript";
-import { hello } from "@functions/hello";
+import { logHandler } from "@functions/log";
 
 const serverlessConfiguration: AWS = {
   service: "CwLogsToSlack",
@@ -23,8 +23,7 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: "20201221",
   },
-  // import the function via paths
-  functions: { hello },
+  functions: { logHandler },
 };
 
 module.exports = serverlessConfiguration;
