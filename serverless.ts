@@ -12,10 +12,12 @@ const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL!;
 const serverlessConfiguration: AWS = {
   service: "CwLogsToSlack",
   frameworkVersion: "2",
+  package: {
+    individually: true,
+  },
   custom: {
     webpack: {
-      webpackConfig: "./webpack.config.js",
-      includeModules: true,
+      packager: "yarn",
     },
   },
   plugins: ["serverless-webpack"],
