@@ -52,6 +52,7 @@ const serverlessConfiguration: AWS = {
     ]),
     [alerterName]: slackAlerter(process.env.SLACK_WEBHOOK_URL!),
   },
+  configValidationMode: "error",
 };
 
 module.exports = serverlessConfiguration;
