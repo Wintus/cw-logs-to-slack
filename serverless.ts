@@ -7,6 +7,8 @@ const alerterArn = {
   "Fn::GetAtt": [`${alerterName}LambdaFunction`, "Arn"] as const,
 };
 
+const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL!;
+
 const serverlessConfiguration: AWS = {
   service: "CwLogsToSlack",
   frameworkVersion: "2",
@@ -52,7 +54,7 @@ const serverlessConfiguration: AWS = {
         },
       },
     ]),
-    [alerterName]: slackAlerter(process.env.SLACK_WEBHOOK_URL!),
+    [alerterName]: slackAlerter(slackWebhookUrl),
   },
   configValidationMode: "error",
 };
