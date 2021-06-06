@@ -13,7 +13,9 @@ const unzipAsync = promisify(unzip);
 
 const decode = async (data: string) => {
   const buffer = Buffer.from(data, "base64");
-  return unzipAsync(buffer);
+  const decoded = await unzipAsync(buffer);
+  const json = decoded.toString("ascii");
+  return JSON.parse(json) as CloudWatchLogsDecodedData;
 };
 
 const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
@@ -27,12 +29,7 @@ const codeBlockSep = "```";
 const logHandler: Handler<CloudWatchLogsEvent> = async ({
   awslogs: { data },
 }) => {
-  const decoded = await decode(data);
-  const json = decoded.toString("ascii");
-  const log = JSON.parse(json) as CloudWatchLogsDecodedData;
-  console.dir(log);
-
-  const { logGroup, logStream, logEvents } = log;
+  const { logGroup, logStream, logEvents } = await decode(data);
   const eventBlocks = logEvents.map(({ id, message, timestamp }) => ({
     type: "section",
     text: {
@@ -49,10 +46,7 @@ ${codeBlockSep}`,
   }));
 
   const sent = await webhook.send({
-    // fallback text
-    text: `${codeBlockSep}
-${json}
-${codeBlockSep}`,
+    text: "Unexpected block fallback happened",
     blocks: [
       {
         type: "header",
