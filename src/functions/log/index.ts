@@ -10,12 +10,12 @@ type Event = Extract<
 >;
 
 export const factory = (
-  events: Event[],
-  slackWebhookUrl: string
+  target: Record<"Fn::GetAtt", ReadonlyArray<string>>,
+  events: Event[]
 ): FunctionConfig => ({
   handler: `${handlerPath(__dirname)}/handler.main`,
   events,
   environment: {
-    SLACK_WEBHOOK_URL: slackWebhookUrl,
+    SLACK_ALERTER_ARN: target,
   },
 });
