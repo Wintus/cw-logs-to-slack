@@ -25,7 +25,7 @@ const slackAlerter: Handler<CloudWatchLogsDecodedData> = async ({
   subscriptionFilters,
   logEvents,
 }) => {
-  const filters = subscriptionFilters.map((s) => `* ${s}`).join("\n");
+  const filters = subscriptionFilters.map((s) => `• ${s}`).join("\n");
   const eventBlocks = logEvents.map(({ id, message, timestamp }) => {
     return {
       type: "section",
