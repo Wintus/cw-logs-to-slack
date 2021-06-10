@@ -19,8 +19,12 @@ const serverlessConfiguration: AWS = {
     webpack: {
       packager: "yarn",
     },
+    prune: {
+      automatic: true,
+      number: 3,
+    },
   },
-  plugins: ["serverless-webpack"],
+  plugins: ["serverless-webpack", "serverless-prune-plugin"],
   provider: {
     name: "aws",
     region: "ap-northeast-1",
