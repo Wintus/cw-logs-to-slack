@@ -15,7 +15,11 @@ const serverlessConfiguration: AWS = {
   package: {
     individually: true,
   },
-  plugins: ["serverless-webpack", "serverless-prune-plugin"],
+  plugins: [
+    "serverless-webpack",
+    "serverless-prune-plugin",
+    "serverless-plugin-lambda-insights",
+  ],
   custom: {
     webpack: {
       packager: "yarn",
@@ -23,6 +27,10 @@ const serverlessConfiguration: AWS = {
     prune: {
       automatic: true,
       number: 3,
+    },
+    lambdaInsights: {
+      defaultLambdaInsights: true,
+      lambdaInsightsVersion: 14,
     },
   },
   provider: {
