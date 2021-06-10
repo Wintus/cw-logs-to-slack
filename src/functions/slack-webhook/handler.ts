@@ -1,8 +1,8 @@
+import "source-map-support/register";
 import { IncomingWebhook } from "@slack/webhook";
 import type { CloudWatchLogsDecodedData, Handler } from "aws-lambda";
 // @ts-ignore
 import { format } from "json-string-formatter";
-import "source-map-support/register";
 
 const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
 if (!slackWebhookUrl) {
