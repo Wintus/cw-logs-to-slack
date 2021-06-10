@@ -4552,6 +4552,11 @@ serialize-javascript@^5.0.1:
   dependencies:
     randombytes "^2.1.0"
 
+serverless-plugin-lambda-insights@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/serverless-plugin-lambda-insights/-/serverless-plugin-lambda-insights-1.0.8.tgz#359dae90c0ee450d7f56d4849d311469fab202cd"
+  integrity sha512-uUvm0dwkXaRWonkBtE098qegkpfcfbWVL9XInqDEiYBwv1YqYzfodvWwaSmP0/DkbFgQ2Jir2T00y7Er4cSTJQ==
+
 serverless-prune-plugin@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/serverless-prune-plugin/-/serverless-prune-plugin-1.5.0.tgz#8c91c70d7239c449d512d757200f9eae7516ae45"
