@@ -15,12 +15,24 @@ const serverlessConfiguration: AWS = {
   package: {
     individually: true,
   },
+  plugins: [
+    "serverless-webpack",
+    "serverless-prune-plugin",
+    "serverless-plugin-lambda-insights",
+  ],
   custom: {
     webpack: {
       packager: "yarn",
     },
+    prune: {
+      automatic: true,
+      number: 3,
+    },
+    lambdaInsights: {
+      defaultLambdaInsights: true,
+      lambdaInsightsVersion: 14,
+    },
   },
-  plugins: ["serverless-webpack"],
   provider: {
     name: "aws",
     region: "ap-northeast-1",
