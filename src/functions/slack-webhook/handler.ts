@@ -43,7 +43,7 @@ ${codeBlockSep}`,
   });
 
   const sent = await webhook.send({
-    text: "Unexpected block fallback happened",
+    text: "Alert from CloudWatch Logs (open for details)",
     blocks: [
       {
         type: "header",
