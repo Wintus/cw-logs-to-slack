@@ -11,8 +11,13 @@ if (!slackWebhookUrl) {
 const webhook = new IncomingWebhook(slackWebhookUrl);
 
 const codeBlockSep = "```";
+
 const locale = "ja-JP";
 const timezone = "Asia/Tokyo";
+const formatDateTime = (timestamp: number) =>
+  new Date(timestamp).toLocaleString(locale, {
+    timeZone: timezone,
+  });
 
 const slackAlerter: Handler<CloudWatchLogsDecodedData> = async ({
   logGroup,
@@ -20,12 +25,8 @@ const slackAlerter: Handler<CloudWatchLogsDecodedData> = async ({
   subscriptionFilters,
   logEvents,
 }) => {
-  const filters = subscriptionFilters.map((s) => `* ${s}`).join("\n");
+  const filters = subscriptionFilters.map((s) => `• ${s}`).join("\n");
   const eventBlocks = logEvents.map(({ id, message, timestamp }) => {
-    const dt = new Date(timestamp).toLocaleString(locale, {
-      timeZone: timezone,
-    });
-
     return {
       type: "section",
       text: {
@@ -33,7 +34,7 @@ const slackAlerter: Handler<CloudWatchLogsDecodedData> = async ({
         text: `
 id = \`${id}\`
 timestamp = \`${timestamp}\`
-happened at = \`${dt}\`
+happened at = \`${formatDateTime(timestamp)}\`
 message:
 ${codeBlockSep}
 ${format(message)}
@@ -43,7 +44,7 @@ ${codeBlockSep}`,
   });
 
   const sent = await webhook.send({
-    text: "Unexpected block fallback happened",
+    text: "Alert from CloudWatch Logs (open for details)",
     blocks: [
       {
         type: "header",
