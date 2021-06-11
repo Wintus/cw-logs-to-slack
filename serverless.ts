@@ -63,8 +63,7 @@ const serverlessConfiguration: AWS = {
       {
         cloudwatchLog: {
           logGroup: "CloudTrail/DefaultLogGroup",
-          filter:
-            '{ ($.errorCode = "*UnauthorizedOperation") || ($.errorCode = "AccessDenied*") }',
+          filter: '{ ($.errorCode = "*") }',
         },
       },
     ]),
