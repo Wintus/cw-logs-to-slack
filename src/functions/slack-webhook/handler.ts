@@ -18,7 +18,8 @@ const formatDateTime = (timestamp: number) =>
   });
 
 // naive formatter
-const formatJson = (json: string): string => JSON.stringify(JSON.parse(json));
+const formatJson = (json: string, indent = "\t"): string =>
+  JSON.stringify(JSON.parse(json), undefined, indent);
 
 const slackAlerter: Handler<CloudWatchLogsDecodedData> = async ({
   logGroup,
