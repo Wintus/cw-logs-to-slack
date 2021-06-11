@@ -1,8 +1,6 @@
 import "source-map-support/register";
 import { IncomingWebhook } from "@slack/webhook";
 import type { CloudWatchLogsDecodedData, Handler } from "aws-lambda";
-// @ts-ignore
-import { format } from "json-string-formatter";
 
 const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
 if (!slackWebhookUrl) {
@@ -18,6 +16,10 @@ const formatDateTime = (timestamp: number) =>
   new Date(timestamp).toLocaleString(locale, {
     timeZone: timezone,
   });
+
+// naive formatter
+const formatJson = (json: string, indent = "\t"): string =>
+  JSON.stringify(JSON.parse(json), undefined, indent);
 
 const slackAlerter: Handler<CloudWatchLogsDecodedData> = async ({
   logGroup,
@@ -37,7 +39,7 @@ timestamp = \`${timestamp}\`
 happened at = \`${formatDateTime(timestamp)}\`
 message:
 ${codeBlockSep}
-${format(message)}
+${formatJson(message)}
 ${codeBlockSep}`,
       },
     };

@@ -14,7 +14,6 @@
     "@middy/core": "^1.5.2",
     "@middy/http-json-body-parser": "^1.5.2",
     "@slack/webhook": "^6.0.0",
-    "json-string-formatter": "^1.0.1",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
